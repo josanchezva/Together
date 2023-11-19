@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:frontend/src/pages/messages.dart';
 import 'package:frontend/together_theme.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'src/pages/calendar.dart';
 import 'src/pages/home.dart';
 import 'src/pages/login.dart';
 import 'src/pages/sign_up.dart';
@@ -22,11 +24,13 @@ class Together extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: TogetherTheme.light(),
       darkTheme: TogetherTheme.dark(),
-      initialRoute: '/login',
+      initialRoute: '/calendar',
       routes: {
         '/home': (context) => const Home(),
         '/login': (context) => const Login(),
         '/sign_up': (context) => const SignUp(),
+        '/messages': (context) => const Messages(),
+        '/calendar': (context) => const Calendar(),
       },
     );
   }

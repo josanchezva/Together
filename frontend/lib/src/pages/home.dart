@@ -11,7 +11,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final HomeController homeController = Get.put(HomeController());
+  final HomeController _homeController = Get.put(HomeController());
   int _counter = 0;
 
   void _incrementCounter() {

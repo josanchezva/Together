@@ -1,6 +1,68 @@
 import 'package:flutter/material.dart';
 
 class TogetherTheme{
+  static TextTheme lightTextTheme = TextTheme(
+    bodyLarge: MaterialStateTextStyle.resolveWith((states) => const TextStyle(
+      fontSize: 46.0,
+      fontWeight: FontWeight.w700,
+      color: Colors.black,
+    )),
+    bodyMedium: MaterialStateTextStyle.resolveWith((states) => const TextStyle(
+      fontSize: 30.0,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+    )),
+    bodySmall: MaterialStateTextStyle.resolveWith((states) => const TextStyle(
+      fontSize: 14.0,
+      fontWeight: FontWeight.w700,
+      color: Colors.black,
+    )),
+    displayLarge: MaterialStateTextStyle.resolveWith((states) => const TextStyle(
+      fontSize: 32.0,
+      fontWeight: FontWeight.bold,
+      color: Colors.black,
+    )),
+    displayMedium: MaterialStateTextStyle.resolveWith((states) => const TextStyle(
+      fontSize: 21.0,
+      fontWeight: FontWeight.w700,
+      color: Colors.black,
+    )),
+    displaySmall: MaterialStateTextStyle.resolveWith((states) => const TextStyle(
+      fontSize: 16.0,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+    )),
+    headlineLarge: MaterialStateTextStyle.resolveWith((states) => const TextStyle(
+      fontSize: 20.0,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+    )),
+    headlineMedium: MaterialStateTextStyle.resolveWith((states) => const TextStyle(
+      fontSize: 16.0,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+    )),
+    headlineSmall: MaterialStateTextStyle.resolveWith((states) => const TextStyle(
+      fontSize: 14.0,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+    )),
+    labelLarge: MaterialStateTextStyle.resolveWith((states) => const TextStyle(
+      fontSize: 16.0,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+    )),
+    labelMedium: MaterialStateTextStyle.resolveWith((states) => const TextStyle(
+      fontSize: 14.0,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+    )),
+    labelSmall: MaterialStateTextStyle.resolveWith((states) => const TextStyle(
+      fontSize: 12.0,
+      fontWeight: FontWeight.w600,
+      color: Colors.black,
+    )),
+  );
   /*static TextTheme lightTextTheme = TextTheme(
     bodyText1: GoogleFonts.openSans(
       fontSize: 14.0,
@@ -59,7 +121,7 @@ class TogetherTheme{
 
   static ThemeData light() {
     return ThemeData(
-      fontFamily: 'Nunito',
+      fontFamily: 'Nunito', 
       brightness: Brightness.light,
       scaffoldBackgroundColor: Colors.white,
       checkboxTheme: const CheckboxThemeData(
@@ -102,7 +164,7 @@ class TogetherTheme{
         borderSide: BorderSide(color: Colors.grey),
         borderRadius: BorderRadius.all(Radius.circular(7.0)),
       )),
-      //textTheme: lightTextTheme,
+      textTheme: lightTextTheme,
     );
   }
 

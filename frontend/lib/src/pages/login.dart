@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/src/pages/home.dart';
+import 'package:frontend/src/controllers/login_controller.dart';
 import 'package:frontend/src/pages/sign_up.dart';
-import 'package:frontend/together_theme.dart';
+import 'package:frontend/utils.dart';
 import 'package:get/get.dart';
-import '../controllers/sign_up_controller.dart';
 import '../services/user_service.dart';
-import 'login.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -15,8 +13,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final SignUpController signUpController = Get.put(SignUpController());
-  final UserService userService = UserService();
+  final LoginController _loginController = Get.put(LoginController());
   final _formKey = GlobalKey<FormState>();
   final _emailFieldController = TextEditingController();
   final _passwordFieldController = TextEditingController();
@@ -24,21 +21,23 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 100,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text('Login', style: TextStyle(color: Colors.black,fontSize: 46)),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.off(() => const SignUp());
-            },
-            child: const Text('Sign Up'),
-          ),
-        ],
-      ),
+      appBar: appBar(),
       body: logInBody(),
+    );
+  }
+
+  AppBar appBar() {
+    return AppBar(
+      toolbarHeight: 100,
+      elevation: 1,
+      centerTitle: true,
+      title: const Text('Login', style: TextStyle(color: Colors.black,fontSize: 46)),
+      actions: const [
+        TextButton(
+          onPressed: getOffHome,
+          child: Text('Sign Up'),
+        ),
+      ],
     );
   }
 

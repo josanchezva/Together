@@ -4,9 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/src/dto/create_user_dto.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
-final url = Uri.parse(dotenv.env['BACKEND_URL'].toString());
-
-
+final url = Uri.parse('${dotenv.env['BACKEND_URL']}/user');
 class UserService {
   UserService();
 
