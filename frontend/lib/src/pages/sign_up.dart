@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/together_theme.dart';
 import 'package:get/get.dart';
 import '../controllers/sign_up_controller.dart';
-import '../services/user_service.dart';
 import 'login.dart';
 
 class SignUp extends StatefulWidget {
@@ -12,8 +12,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final SignUpController signUpController = Get.put(SignUpController());
-  final UserService userService = UserService();
+  final SignUpController _signUpController = Get.put(SignUpController());
   final _formKey = GlobalKey<FormState>();
   final _emailFieldController = TextEditingController();
   final _nameFieldController = TextEditingController();
@@ -27,9 +26,9 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
-        elevation: 0,
+        elevation: 1,
         centerTitle: true,
-        title: const Text('Sign Up', style: TextStyle(color: Colors.black,fontSize: 46)),
+        title: Text('Sign Up', style: TogetherTheme.lightTextTheme.bodyLarge),
         actions: [
           TextButton(
             onPressed: () {
@@ -143,7 +142,7 @@ class _SignUpState extends State<SignUp> {
             setState(() {
               _isLoading = true;
             });
-            String getResponse = await signUpController.createUser(
+            String getResponse = await _signUpController.createUser(
               _emailFieldController.text,
               _nameFieldController.text,
               _passwordFieldController.text,
