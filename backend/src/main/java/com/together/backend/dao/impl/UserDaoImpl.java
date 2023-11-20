@@ -71,7 +71,6 @@ public class UserDaoImpl implements UserDao{
         OperationResponse<BasicUser> operationResponse = null;
         BasicUser bufferUser = null;
 
-        
         try {
             Firestore db = fireBaseConnection.getDB();
             if(data != null && id != null && !id.isEmpty()) {

@@ -41,7 +41,6 @@ public class UserBusinessImpl implements UserBusiness{
         }else{
             return null;
         }
-        
     }
 
     @Override

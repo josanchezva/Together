@@ -7,7 +7,7 @@ import com.together.backend.dto.OperationResponse;
 
 public interface UserBusiness {
     
-    OperationResponse<BasicUser> createUser(BasicUser user) throws Exception;
+    public OperationResponse<BasicUser> createUser(BasicUser user) throws Exception;
 
     public BasicUser getUserById(@Nonnull String id)throws Exception;
 
