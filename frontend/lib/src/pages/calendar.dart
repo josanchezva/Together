@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -13,15 +15,51 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  final CalendarController _calendarController = Get.put(CalendarController());
+  final CalendarController calendarController = Get.put(CalendarController());
   DateTime? _selectedDay;
-
   DateTime _focusedDay = DateTime.now();
-
   CalendarFormat _calendarFormat = CalendarFormat.month;
+  Map<DateTime, List> _eventsList = {};
+  @override
+  void initState() {
+    super.initState();
+    _selectedDay = _focusedDay;
+    _eventsList = {
+      DateTime.now().subtract(const Duration(days: 2)): [
+        'Event A1',
+        'Event B1'
+      ],
+      DateTime.now(): ['Event A2', 'Event B2', 'Event C1', 'Event D1'],
+      DateTime.now().add(const Duration(days: 1)): [
+        'Event A3',
+        'Event B3',
+        'Event C2',
+        'Event D2'
+      ],
+      DateTime.now().add(const Duration(days: 3)):
+          {'Event A4', 'Event A5', 'Event B4'}.toList(),
+      DateTime.now().add(const Duration(days: 7)): [
+        'Event A6',
+        'Event B5',
+        'Event C3'
+      ],
+    };
+  }
+
+  int getHashCode(DateTime key) {
+    return key.day * 1000000 + key.month * 10000 + key.year;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final events = LinkedHashMap<DateTime, List>(
+      equals: isSameDay,
+      hashCode: getHashCode,
+    )..addAll(_eventsList);
+    List getEventForDay(DateTime day) {
+      return events[day] ?? [];
+    }
+
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -65,7 +103,7 @@ class _CalendarState extends State<Calendar> {
                   border: Border.all(width: 0),
                 ),
               ),
-              focusedDay: DateTime.now(),
+              focusedDay: _focusedDay,
               firstDay: DateTime.utc(2010, 10, 16),
               lastDay: DateTime.utc(2030, 12, 31),
               selectedDayPredicate: (day) {
@@ -74,8 +112,18 @@ class _CalendarState extends State<Calendar> {
               onDaySelected: onDaySelected,
               onFormatChanged: onFormatChanged,
               onPageChanged: onPageChanged,
+              eventLoader: getEventForDay,
               calendarFormat: _calendarFormat,
             ),
+            ListView(
+              shrinkWrap: true,
+              children: getEventForDay(_selectedDay!)
+                  .map((event) => ListTile(
+                    
+                        title: Text(event.toString()),
+                      ))
+                  .toList(),
+            )
           ],
         ),
       ),
@@ -93,8 +141,12 @@ class _CalendarState extends State<Calendar> {
   }
 
   void onDaySelected(selectedDay, focusedDay) {
-      _selectedDay = selectedDay;
-      _focusedDay = focusedDay;
+    if (!isSameDay(_selectedDay, selectedDay)) {
+      setState(() {
+        _selectedDay = selectedDay;
+        _focusedDay = focusedDay;
+      });
+    }
   }
 
   AppBar appBar() {
@@ -105,7 +157,7 @@ class _CalendarState extends State<Calendar> {
       centerTitle: true,
       title: Text(
         DateFormat('MMMM').format(DateTime.now()),
-        style: TextStyle(color: Colors.white, fontSize: 46),
+        style: const TextStyle(color: Colors.white, fontSize: 46),
       ),
     );
   }

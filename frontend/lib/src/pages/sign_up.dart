@@ -12,7 +12,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  final SignUpController _signUpController = Get.put(SignUpController());
+  final SignUpController signUpController = Get.put(SignUpController());
   final _formKey = GlobalKey<FormState>();
   final _emailFieldController = TextEditingController();
   final _nameFieldController = TextEditingController();
@@ -142,7 +142,7 @@ class _SignUpState extends State<SignUp> {
             setState(() {
               _isLoading = true;
             });
-            String getResponse = await _signUpController.createUser(
+            String getResponse = await signUpController.createUser(
               _emailFieldController.text,
               _nameFieldController.text,
               _passwordFieldController.text,

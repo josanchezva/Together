@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:frontend/src/controllers/home_controller.dart';
 import 'package:get/get.dart';
@@ -11,7 +9,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final HomeController _homeController = Get.put(HomeController());
+  final HomeController homeController = Get.put(HomeController());
   int _counter = 0;
 
   void _incrementCounter() {

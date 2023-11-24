@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/src/controllers/login_controller.dart';
-import 'package:frontend/src/pages/sign_up.dart';
 import 'package:frontend/utils.dart';
 import 'package:get/get.dart';
-import '../services/user_service.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -13,7 +11,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  final LoginController _loginController = Get.put(LoginController());
+  final LoginController loginController = Get.put(LoginController());
   final _formKey = GlobalKey<FormState>();
   final _emailFieldController = TextEditingController();
   final _passwordFieldController = TextEditingController();
@@ -31,7 +29,8 @@ class _LoginState extends State<Login> {
       toolbarHeight: 100,
       elevation: 1,
       centerTitle: true,
-      title: const Text('Login', style: TextStyle(color: Colors.black,fontSize: 46)),
+      title: const Text('Login',
+          style: TextStyle(color: Colors.black, fontSize: 46)),
       actions: const [
         TextButton(
           onPressed: getOffHome,
@@ -44,8 +43,7 @@ class _LoginState extends State<Login> {
   Widget logInBody() {
     return SafeArea(
       child: SingleChildScrollView(
-        child:
-            Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.15,
           ),
@@ -94,9 +92,7 @@ class _LoginState extends State<Login> {
   }
 
   ElevatedButton logInuserButton() {
-    return ElevatedButton(
-        onPressed: () async {},
-        child: const Text('Login'));
+    return ElevatedButton(onPressed: () async {}, child: const Text('Login'));
   }
 
   String? validateEmail(String? value) {
@@ -111,5 +107,4 @@ class _LoginState extends State<Login> {
       return null;
     }
   }
-
 }

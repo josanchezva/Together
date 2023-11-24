@@ -14,14 +14,18 @@ class Messages extends StatefulWidget {
 }
 
 class _MessagesState extends State<Messages> {
-  final MessagesController _messagesController = Get.put(MessagesController());
+  final MessagesController messagesController = Get.put(MessagesController());
   final _user = const types.User(id: '1', firstName: 'John', lastName: 'Doe');
   final _user2 = const types.User(id: '2', firstName: 'Regina', lastName: 'Jones');
-  late  List<types.Message> _messages = [
+  List<types.Message> _messages = [];
+  @override
+  void initState() {
+    _messages= [
       types.TextMessage(author: _user, id: '13', text: '_user'),
       types.TextMessage(author: _user2, id: '124124', text: '_user2'),
-  ];
-
+    ];
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
