@@ -64,5 +64,21 @@ public class UserBusinessImpl implements UserBusiness{
         }
         return operation;
     }
+
+    @Override
+    public OperationResponse<BasicUser> getUserByEmail(@Nonnull String email) throws Exception {
+        OperationResponse<BasicUser> operation = null;
+        try {
+            operation = basicPersonDao.getUserByEmail(email);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
+        if(operation != null){
+            return operation;
+        }else{
+            return null;
+        }
+    }
     
 }

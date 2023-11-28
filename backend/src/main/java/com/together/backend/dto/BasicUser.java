@@ -3,6 +3,7 @@ package com.together.backend.dto;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BasicUser {
 
@@ -11,10 +12,15 @@ public class BasicUser {
     private String secondName;
     private String surname;
     private String contactPhone;
-    private String role;
+    private String role = "User";
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE, d MMM yyyy HH:mm:ss Z")
     private Date creationDate;
+
+    private String email;
 
     public String getUserId() {
         return userId;
@@ -64,14 +70,19 @@ public class BasicUser {
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
-    
-    @Override
-    public String toString() {
-        return "BasicUser [userId=" + userId + ", firstName=" + firstName + ", secondName=" + secondName + ", surname="
-                + surname + ", contactPhone=" + contactPhone + ", role=" + role + ", creationDate=" + creationDate
-                + "]";
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
     
-
 }
