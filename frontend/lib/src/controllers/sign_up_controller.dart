@@ -4,12 +4,11 @@ import 'package:get/get.dart';
 
 class SignUpController extends GetxController {
   final _userService = UserService();
-  Future<String> createUser(
-      String email, String name, String password) async {
+  createUser(String email, String name, String password) async {
     User user = await _userService.createUser(email, name, password);
     if (user.id == 'null') {
       return 'Error al crear usuario';
     }
-    return 'Usuario Creado';
+    return user;
   }
 }

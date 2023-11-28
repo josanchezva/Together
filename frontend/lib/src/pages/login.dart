@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/src/controllers/login_controller.dart';
+import 'package:frontend/src/pages/home.dart';
+import 'package:frontend/src/pages/sign_up.dart';
 import 'package:frontend/utils.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/user.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -17,6 +22,11 @@ class _LoginState extends State<Login> {
   final _passwordFieldController = TextEditingController();
   bool _isVisible = false;
   @override
+  void initState() {
+    super.initState();
+    redirectToHomeIfLoggedIn();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
@@ -31,10 +41,12 @@ class _LoginState extends State<Login> {
       centerTitle: true,
       title: const Text('Login',
           style: TextStyle(color: Colors.black, fontSize: 46)),
-      actions: const [
+      actions: [
         TextButton(
-          onPressed: getOffHome,
-          child: Text('Sign Up'),
+          onPressed: () {
+            Get.off(() => const SignUp());
+          },
+          child: const Text('Sign Up'),
         ),
       ],
     );
@@ -92,7 +104,16 @@ class _LoginState extends State<Login> {
   }
 
   ElevatedButton logInuserButton() {
-    return ElevatedButton(onPressed: () async {}, child: const Text('Login'));
+    return ElevatedButton(
+        onPressed: () async {
+          //TODO: add DB validation
+          //TODO: send user response to sharedpreferences
+          User user = User(id: '1', email: 'hola@gmail.com ', name: 'Luis');
+          saveUserDataInSharedPreferences(user);
+          loginController.user = await loadUserDataFromSharedPreferences();
+          Get.off(() => const Home());
+        },
+        child: const Text('Login'));
   }
 
   String? validateEmail(String? value) {
@@ -105,6 +126,19 @@ class _LoginState extends State<Login> {
       return 'Enter a valid email address';
     } else {
       return null;
+    }
+  }
+
+  Future<bool> checkIfLoggedIn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? userLoggedIn = prefs.getString('userLoggedIn');
+    return userLoggedIn != null;
+  }
+
+  Future<void> redirectToHomeIfLoggedIn() async {
+    final bool isLoggedIn = await checkIfLoggedIn();
+    if (isLoggedIn) {
+      Get.off(() => const Home());
     }
   }
 }

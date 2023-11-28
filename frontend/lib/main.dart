@@ -8,8 +8,7 @@ import 'src/pages/home.dart';
 import 'src/pages/login.dart';
 import 'src/pages/sign_up.dart';
 
-
-Future main() async{
+Future main() async {
   await dotenv.load(fileName: '.env');
   runApp(const Together());
 }
@@ -23,8 +22,9 @@ class Together extends StatelessWidget {
       title: 'Together',
       debugShowCheckedModeBanner: false,
       theme: TogetherTheme.light(),
-      darkTheme: TogetherTheme.dark(),
-      initialRoute: '/calendar',
+      //darkTheme: TogetherTheme.dark(),
+      darkTheme: TogetherTheme.light(),
+      initialRoute: '/login',
       routes: {
         '/home': (context) => const Home(),
         '/login': (context) => const Login(),

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
+import 'package:frontend/src/controllers/home_controller.dart';
 import 'package:frontend/src/controllers/messages_controller.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:get/get.dart';
@@ -15,17 +16,7 @@ class Messages extends StatefulWidget {
 
 class _MessagesState extends State<Messages> {
   final MessagesController messagesController = Get.put(MessagesController());
-  final _user = const types.User(id: '1', firstName: 'John', lastName: 'Doe');
-  final _user2 = const types.User(id: '2', firstName: 'Regina', lastName: 'Jones');
-  List<types.Message> _messages = [];
-  @override
-  void initState() {
-    _messages= [
-      types.TextMessage(author: _user, id: '13', text: '_user'),
-      types.TextMessage(author: _user2, id: '124124', text: '_user2'),
-    ];
-    super.initState();
-  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,24 +34,33 @@ class _MessagesState extends State<Messages> {
           style: TextStyle(color: Colors.black, fontSize: 46)),
       actions: [
         filterMessagesButton(),
+        goBackButton(),
       ],
     );
   }
 
   TextButton filterMessagesButton() {
     return TextButton(
-          onPressed: () {
-            filterMessages();
-          },
-          child: const Text('Filter'),
-        );
+      onPressed: () {
+        filterMessages();
+      },
+      child: const Text('Filter'),
+    );
+  }
+  TextButton goBackButton() {
+    return TextButton(
+      onPressed: () {
+        Get.toNamed('/home');
+      },
+      child: const Text('back'),
+    );
   }
 
   Widget messagesBody() {
     return Chat(
         onSendPressed: _handleSendPressed,
-        messages: _messages,
-        user: _user,
+        messages: messagesController.messages,
+        user: messagesController.user,
         theme: const DefaultChatTheme(
           inputBorderRadius: BorderRadius.all(Radius.circular(30)),
           inputBackgroundColor: Colors.grey,
@@ -79,7 +79,7 @@ class _MessagesState extends State<Messages> {
 
   void _addMessage(types.Message message) {
     setState(() {
-      _messages.insert(0, message);
+      messagesController.messages.insert(0, message);
     });
   }
 
@@ -91,7 +91,7 @@ class _MessagesState extends State<Messages> {
 
   void _handleSendPressed(types.PartialText message) {
     final textMessage = types.TextMessage(
-      author: _user,
+      author: messagesController.user,
       createdAt: DateTime.now().millisecondsSinceEpoch,
       id: randomString(),
       text: message.text,
@@ -101,5 +101,4 @@ class _MessagesState extends State<Messages> {
   }
 
   void filterMessages() {}
-
 }

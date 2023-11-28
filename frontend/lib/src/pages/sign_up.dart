@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/src/pages/home.dart';
 import 'package:frontend/together_theme.dart';
+import 'package:frontend/utils.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/sign_up_controller.dart';
+import '../models/user.dart';
 import 'login.dart';
 
 class SignUp extends StatefulWidget {
@@ -28,7 +32,7 @@ class _SignUpState extends State<SignUp> {
         toolbarHeight: 100,
         elevation: 1,
         centerTitle: true,
-        title: Text('Sign Up', style: TogetherTheme.lightTextTheme.bodyLarge),
+        title: const Text('Sign Up', style: TextStyle(color: Colors.black, fontSize: 46)),
         actions: [
           TextButton(
             onPressed: () {
@@ -142,7 +146,7 @@ class _SignUpState extends State<SignUp> {
             setState(() {
               _isLoading = true;
             });
-            String getResponse = await signUpController.createUser(
+            var newUser = await signUpController.createUser(
               _emailFieldController.text,
               _nameFieldController.text,
               _passwordFieldController.text,
@@ -150,17 +154,18 @@ class _SignUpState extends State<SignUp> {
             setState(() {
               _isLoading = false;
             });
-            if (getResponse == "Usuario Creado") {
+            if (newUser.runtimeType == User) {
+              saveUserDataInSharedPreferences(newUser);
               Get.snackbar(
                 'Se ha creado el usuario correctamente',
-                'Inicia Sesión para continuar',
+                'Bienvenido',
                 duration: const Duration(seconds: 3),
               );
-              Get.to(() => const Login());
+              Get.to(() => const Home());
             } else {
               Get.snackbar(
                 'Error',
-                getResponse,
+                newUser,
                 duration: const Duration(seconds: 3),
               );
             }
