@@ -62,6 +62,17 @@ public class UserServiceImpl implements UserService {
         }
         return response;
     }
+
+    @Override
+    public OperationResponse<BasicUser> getUserByEmail(@Nonnull String email) throws Exception {
+        OperationResponse<BasicUser> response = null;
+        try {
+            response = basicPersonBusiness.getUserByEmail(email);    
+        } catch (Exception e) {
+            e.getCause();
+        }
+        return response;
+    }
     
     
 }

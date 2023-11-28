@@ -14,4 +14,7 @@ public interface UserBusiness {
     public OperationResponse<BasicUser> updateUserData(BasicUser data, String id) throws Exception;
 
     public OperationResponse<BasicUser> deleteUser(@Nonnull String id) throws Exception;
+
+    public OperationResponse<BasicUser> getUserByEmail(@Nonnull String email) throws Exception;
+    
 }

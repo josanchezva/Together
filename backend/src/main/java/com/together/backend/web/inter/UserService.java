@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.together.backend.dto.BasicUser;
@@ -30,4 +31,7 @@ public interface UserService {
 
     @DeleteMapping("/delete/{id}")
     public OperationResponse<BasicUser> deleteUser(@Nonnull @PathVariable String id) throws Exception;
+
+    @GetMapping("/get")
+    public OperationResponse<BasicUser> getUserByEmail(@Nonnull @RequestParam String email) throws Exception;
 }

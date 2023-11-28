@@ -26,6 +26,7 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/com.google.firebase/firebase-admin
 	implementation group: 'com.google.firebase', name: 'firebase-admin', version: '9.2.0'
+	implementation group: 'org.springframework.security', name: 'spring-security-crypto', version: '6.2.0'
 }
 
 tasks.named('test') {
