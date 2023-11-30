@@ -9,25 +9,54 @@ CreateUserDto createUserDtoFromJson(String str) => CreateUserDto.fromJson(json.d
 String createUserDtoToJson(CreateUserDto data) => json.encode(data.toJson());
 
 class CreateUserDto {
+    final String firstName;
+    final String secondName;
+    final String surname;
+    final String contactPhone;
+    final String password;
+    final String email;
+
     CreateUserDto({
-        required this.email,
-        required this.name,
+        required this.firstName,
+        required this.secondName,
+        required this.surname,
+        required this.contactPhone,
         required this.password,
+        required this.email,
     });
 
-    final String email;
-    final String name;
-    final String password;
+    CreateUserDto copyWith({
+        String? firstName,
+        String? secondName,
+        String? surname,
+        String? contactPhone,
+        String? password,
+        String? email,
+    }) => 
+        CreateUserDto(
+            firstName: firstName ?? this.firstName,
+            secondName: secondName ?? this.secondName,
+            surname: surname ?? this.surname,
+            contactPhone: contactPhone ?? this.contactPhone,
+            password: password ?? this.password,
+            email: email ?? this.email,
+        );
 
     factory CreateUserDto.fromJson(Map<String, dynamic> json) => CreateUserDto(
+        firstName: json["firstName"],
+        secondName: json["secondName"],
+        surname: json["surname"],
+        contactPhone: json["contactPhone"],
+        password: json["password"],
         email: json["email"],
-        name: json["username"],
-        password: json["password"]
     );
 
     Map<String, dynamic> toJson() => {
-        "email": email,
-        "username": name,
+        "firstName": firstName,
+        "secondName": secondName,
+        "surname": surname,
+        "contactPhone": contactPhone,
         "password": password,
+        "email": email,
     };
 }

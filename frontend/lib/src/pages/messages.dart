@@ -3,9 +3,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
-import 'package:frontend/src/controllers/home_controller.dart';
 import 'package:frontend/src/controllers/messages_controller.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:frontend/utils.dart';
 import 'package:get/get.dart';
 
 class Messages extends StatefulWidget {
@@ -19,10 +19,7 @@ class _MessagesState extends State<Messages> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBar(),
-      body: messagesBody(),
-    );
+    return Scaffold(appBar: appBar(), body: messagesBody());
   }
 
   AppBar appBar() {
@@ -34,7 +31,6 @@ class _MessagesState extends State<Messages> {
           style: TextStyle(color: Colors.black, fontSize: 46)),
       actions: [
         filterMessagesButton(),
-        goBackButton(),
       ],
     );
   }
@@ -47,17 +43,13 @@ class _MessagesState extends State<Messages> {
       child: const Text('Filter'),
     );
   }
-  TextButton goBackButton() {
-    return TextButton(
-      onPressed: () {
-        Get.toNamed('/home');
-      },
-      child: const Text('back'),
-    );
-  }
 
-  Widget messagesBody() {
-    return Chat(
+Widget messagesBody() {
+  return Obx(() {
+    if (!messagesController.isControllerReady.value) {
+      return const Center(child: CircularProgressIndicator());
+    } else {
+      return Chat(
         onSendPressed: _handleSendPressed,
         messages: messagesController.messages,
         user: messagesController.user,
@@ -67,19 +59,18 @@ class _MessagesState extends State<Messages> {
           inputTextColor: Colors.white,
           primaryColor: Colors.green,
           secondaryColor: Colors.grey,
-          backgroundColor: Colors.white,
-          sendButtonIcon: Icon(
-            Icons.arrow_circle_up_sharp,
-            color: Colors.white,
-          ),
-          inputMargin: EdgeInsets.all(10),
-          inputTextStyle: TextStyle(color: Colors.black),
-        ));
-  }
+        ),
+      );
+    }
+  });
+}
 
-  void _addMessage(types.Message message) {
+  void _addMessage(types.Message message,text) async{
+    messagesController.messages.insert(0, message);
+    saveMessagesInSharedPreferences(messagesController.messages);
+    await messagesController.sendPrompt(text);
     setState(() {
-      messagesController.messages.insert(0, message);
+      
     });
   }
 
@@ -97,7 +88,7 @@ class _MessagesState extends State<Messages> {
       text: message.text,
     );
 
-    _addMessage(textMessage);
+    _addMessage(textMessage,message.text);
   }
 
   void filterMessages() {}

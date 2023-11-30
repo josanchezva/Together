@@ -3,13 +3,16 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/src/pages/messages.dart';
 import 'package:frontend/together_theme.dart';
 import 'package:get/get_navigation/get_navigation.dart';
+import 'package:logger/logger.dart';
 import 'src/pages/calendar.dart';
 import 'src/pages/home.dart';
 import 'src/pages/login.dart';
 import 'src/pages/sign_up.dart';
 
 Future main() async {
-  await dotenv.load(fileName: '.env');
+  await dotenv.load(fileName:'.env');
+  WidgetsFlutterBinding.ensureInitialized();
+  Logger.level = Level.info;
   runApp(const Together());
 }
 

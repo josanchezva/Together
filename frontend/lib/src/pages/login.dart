@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/src/controllers/login_controller.dart';
 import 'package:frontend/src/pages/home.dart';
@@ -5,8 +7,6 @@ import 'package:frontend/src/pages/sign_up.dart';
 import 'package:frontend/utils.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../models/user.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -20,12 +20,14 @@ class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final _emailFieldController = TextEditingController();
   final _passwordFieldController = TextEditingController();
+
   bool _isVisible = false;
   @override
   void initState() {
     super.initState();
     redirectToHomeIfLoggedIn();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,12 +108,21 @@ class _LoginState extends State<Login> {
   ElevatedButton logInuserButton() {
     return ElevatedButton(
         onPressed: () async {
-          //TODO: add DB validation
-          //TODO: send user response to sharedpreferences
-          User user = User(id: '1', email: 'hola@gmail.com ', name: 'Luis');
-          saveUserDataInSharedPreferences(user);
-          loginController.user = await loadUserDataFromSharedPreferences();
-          Get.off(() => const Home());
+          var response = await loginController
+              .loginUser(_emailFieldController.text.trim());
+          inspect(response);
+          if (response.runtimeType == String) {
+            Get.snackbar('Error', 'User not found');
+          }//TODO: uncomment this when password is added to the user model
+          /* else if (response.password !=
+              _passwordFieldController.text.trim()) {
+            Get.snackbar('Error', 'Wrong password');
+          }*/
+          else {
+            loginController.user = response;
+            saveUserDataInSharedPreferences(response);
+            Get.off(() => const Home());
+          }
         },
         child: const Text('Login'));
   }

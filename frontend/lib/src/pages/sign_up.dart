@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/src/pages/home.dart';
-import 'package:frontend/together_theme.dart';
 import 'package:frontend/utils.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/sign_up_controller.dart';
 import '../models/user.dart';
 import 'login.dart';
@@ -23,6 +21,7 @@ class _SignUpState extends State<SignUp> {
   final _passwordFieldController = TextEditingController();
   final _confirmPasswordFieldController = TextEditingController();
   bool _isVisible = false;
+  // ignore: unused_field
   bool _isLoading = false;
   bool _isChecked = false;
   @override
@@ -161,7 +160,7 @@ class _SignUpState extends State<SignUp> {
                 'Bienvenido',
                 duration: const Duration(seconds: 3),
               );
-              Get.to(() => const Home());
+              Get.off(() => const Home());
             } else {
               Get.snackbar(
                 'Error',

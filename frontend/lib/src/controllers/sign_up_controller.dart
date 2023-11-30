@@ -6,7 +6,7 @@ class SignUpController extends GetxController {
   final _userService = UserService();
   createUser(String email, String name, String password) async {
     User user = await _userService.createUser(email, name, password);
-    if (user.id == 'null') {
+    if (user.userId == 'null') {
       return 'Error al crear usuario';
     }
     return user;
