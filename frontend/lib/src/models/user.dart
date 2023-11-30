@@ -63,8 +63,7 @@ class User {
         role: json["entity"]["role"],
         creationDate: json["entity"]["creationDate"],
         email: json["entity"]["email"],
-        //password: json["entity"]["password"],
-        password: '123456'
+        password: json["entity"]["password"],
     );
 
     Map<String, dynamic> toJson() => {

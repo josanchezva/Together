@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:frontend/src/models/user.dart';
+import 'package:frontend/src/pages/login.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,6 +65,12 @@ deleteUserDataFromSharedPreferences() async {
   await prefs.remove('userLoggedIn');
   await prefs.remove('user');
   Logger().i('Deleted user data from shared preferences');
+}
+deleteSharedPrefs() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.clear();
+  Get.off(() => const Login());
+  Logger().i('Deleted all shared preferences');
 }
 
 deleteCalendarEventsFromSharedPreferences() async {

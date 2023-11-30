@@ -67,19 +67,10 @@ class _HomeState extends State<Home> {
                   const Divider(),
                   ListTile(
                     leading: const Icon(Icons.calendar_today),
-                    title: const Text('Delete medicines',
-                        style: TextStyle(fontSize: 20)),
-                    onTap: () {
-                      deleteMedicinesFromSharedPreferences();
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.calendar_today),
                     title: const Text('Delete Preferences',
                         style: TextStyle(fontSize: 20)),
                     onTap: () {
-                      deleteUserDataFromSharedPreferences();
-                      deleteCalendarEventsFromSharedPreferences();
+                      deleteSharedPrefs();
                     },
                   ),
                   ListTile(
