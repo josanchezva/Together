@@ -5,7 +5,6 @@ import java.util.Date;
 import javax.annotation.Nonnull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.google.api.core.ApiFuture;
@@ -21,8 +20,6 @@ import com.together.backend.firebase.FirebaseInitializer;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     FirebaseInitializer fireBaseConnection;
@@ -40,10 +37,6 @@ public class UserDaoImpl implements UserDao {
 
                 user.setCreationDate(new Date());
                 user.setUserId(id);
-                if (user.getPassword() != null && !user.getPassword().isEmpty()) {
-                    user.setPassword(passwordEncoder.encode(user.getPassword()).toString());
-                }
-
                 db.collection(COLLECTION_ID).document(id).create(user);
                 operationResponse = new OperationResponse<BasicUser>("[Created] user created successfully.", user);
             }

@@ -3,7 +3,6 @@ package com.together.backend.dto;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class BasicUser {
 
@@ -13,8 +12,6 @@ public class BasicUser {
     private String surname;
     private String contactPhone;
     private String role = "User";
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEE, d MMM yyyy HH:mm:ss Z")
